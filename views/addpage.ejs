@@ -4,7 +4,7 @@
 <body>
 <% include ./header %>
 
-<div class="card">
+<div class="card blue">
 
     <form method="post" action="saveitem">
 
@@ -12,10 +12,12 @@
 
 
 
-
+        Video game name: <input type="text" name="videoGameName"/>
+        Created by: <input type="text" name="createdby" required/>
+        Url: <input type="url" name="url"/>
         Added by: <input type="text" name="addedBy" value="<%=loginName%>" readonly/>
-
         <button class="btn" type="submit" name="submit">Save Item</button>
+
 
     </form>
 

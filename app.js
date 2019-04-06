@@ -22,6 +22,10 @@ function databaseInitialize() {
         User = db.addCollection("users");
         User.insert({username:'admin',password:'admin'});
         User.insert({username:'user',password:'user'});
+        User.insert({username:'aryan',password:'aryan'});
+        User.insert({username:'arsh',password:'arsh'});
+         User.insert({username:'drone',password:'drone'});
+        User.insert({username:'phantom',password:'phantom'});
     }
     if (Item === null) {
         Item = db.addCollection('items');
@@ -109,20 +113,36 @@ app.post('/login', function (request, response) {
     request.session.user = loginName;
 
     //hint: check is password is good or not, if not load same page with error as below
-    //response.render('index', {message: "Invalid user name or password"});
 
-    response.render('listpage', {items: Item.find()});
+    var loginSuccses =
+        userPasswordMatch(loginName, password);
+    if(loginSuccses){
+          response.render('listpage', {items: Item.find()});
+    } else {
+        response.render('index', {message: "Invalid user name or password"});
+    }
+
 
 });
 
 
 
 // when save button is clicked on add page
+
 app.post('/saveitem', function (request, response) {
 
-    // hint #1: find the helper function that will help save the information first
-    // hint #2: make sure to send the list of items to the list page
+var items = saveFormAndReturnAllItems(request.body);
 
-    response.render('listpage',{ items:[] });
+     response.render('listpage', {items: items});
+
+});
+
+
+app.get('/delete', function (request, response) {
+
+var items = deleteAndSort("videoGameName",request.query.videoGameName);
+
+     response.render('listpage', {items: items});
+
 });
 
